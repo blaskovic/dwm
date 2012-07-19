@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -n "$DISPLAY" ]; then
+	#BROWSER=google-chrome
+	:
+fi
+
+service dwm-panel start
+
+while true; do
+	dwm || exit
+done

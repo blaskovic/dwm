@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Files
+CYCLE_NAME="dwm-panel-cycle"
+FEATURES_FILE="/tmp/dwm-panel.features"
+CYCLE_SCRIPT="/etc/init.d/$CYCLE_NAME"
+
+touch "$FEATURES_FILE"
+
+# Functions
+F_START()
+{
+	pidof $CYCLE_SCRIPT && echo "Service is already running" && return 1
+	$CYCLE_SCRIPT 2>&1 >/dev/null &
+	return 0
+}
+
+F_STOP()
+{
+	killall "$CYCLE_NAME"
+}
+
+F_SAVE_FEATURE_FILE()
+{
+	SAVE=""
+	for feature in "${!FEATURES[@]}"
+	do
+		SAVE="${feature}=${FEATURES["$feature"]} ${SAVE}"
+	done
+	echo "$SAVE" > $FEATURES_FILE
+}
+
+F_LOAD_FEATURE_FILE()
+{
+	for setting in $(cat $FEATURES_FILE)
+	do
+		feature=$(echo "$setting" | awk -F= '{print $1}')
+		value=$(echo "$setting" | awk -F= '{print $2}')
+		FEATURES["$feature"]=$value
+	done
+}
+
+# Features and their default values
+declare -A FEATURES=( ["time"]=1 ["tabletbattery"]=0 ["load"]=1 ["ram_usage"]=1 )
+
+# If feature file is empty, set with default values
+if [ "$( cat $FEATURES_FILE )" = "" ];then
+	F_SAVE_FEATURE_FILE
+fi
+
+F_LOAD_FEATURE_FILE
+
+# Command
+COMMAND="$1"
+shift
+
+OPTION="$@"
+
+echo "dwm-panel service by Branislav Blaskovic"
+echo
+
+case "$COMMAND" in
+start)
+	echo "Starting service"
+	F_START
+	;;
+stop)
+	echo "Stopping service"
+	F_STOP
+	;;
+restart)
+	echo "Restarting service"
+	F_STOP
+	F_START
+	;;
+features)
+	echo "Listing features:"
+	F_LOAD_FEATURE_FILE
+	for feature in "${!FEATURES[@]}"
+	do
+		echo "$feature = ${FEATURES["$feature"]}"
+	done
+	;;
+enable)
+	echo "Enabling feature $OPTION"
+	FEATURES["$OPTION"]=1
+	F_SAVE_FEATURE_FILE
+	;;
+disable)
+	echo "Disabling feature $OPTION"
+	FEATURES["$OPTION"]=0
+	F_SAVE_FEATURE_FILE
+	;;
+*)
+	echo "Available commands:"
+	echo "{start|stop|restart|features|enable|disable}"
+	;;
+esac
+

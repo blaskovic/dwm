@@ -1,0 +1,61 @@
+#!/bin/bash
+
+DISPLAY=":0"
+
+FEATURES_FILE="/tmp/dwm-panel.features"
+declare -A FEATURES
+
+F_LOAD_FEATURE_FILE()
+{
+	for setting in $(cat $FEATURES_FILE)
+	do
+		feature=$(echo "$setting" | awk -F= '{print $1}')
+		value=$(echo "$setting" | awk -F= '{print $2}')
+		FEATURES["$feature"]=$value
+	done
+}
+
+F_LOAD_FEATURE_FILE
+
+TABLET_BATTERY_TIME=0
+LOAD_TIME=0
+while true
+do
+	SHOW=""
+
+	# LOAD
+	if [ "${FEATURES["load"]}" = "1" ];then
+		# Every 5 minutes
+		if [ "$LOAD_TIME" -eq 0 ] ; then
+			LOAD_TIME=60
+			LOAD="L:$( uptime | sed 's/.*,//' ) | "
+		fi
+	fi
+
+	# RAM
+	if [ "${FEATURES["ram_usage"]}" = "1" ];then
+		RAM="RAM: $(free -m |awk '/cache:/ { print $3"M" }') | "
+	fi
+
+
+	# TABLETBATTERY
+	if [ "${FEATURES["tabletbattery"]}" = "1" ];then
+		# Every 5 minutes
+		if [ "$TABLET_BATTERY_TIME" -eq 0 ] ; then
+			BATT="B:$(cat /sys/class/power_supply/battery/capacity)%"
+			DOCK="D:$(cat /sys/class/power_supply/dock_battery/capacity)%"
+			TABLET_BATTERY_TIME=300
+			TABLETBATTERY="$BATT $DOCK | "
+		fi
+	fi
+
+	# TIME
+	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+
+	SHOW="${RAM}${LOAD}${TABLETBATTERY}${TIME}"
+	xsetroot -name "$SHOW" -display :0
+
+	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
+	((LOAD_TIME=$LOAD_TIME-1))
+	sleep 1
+done
