@@ -71,13 +71,13 @@ static const char *cmdsoundup[]  = { "amixer", "-q", "sset", "Master", "5%+", NU
 static const char *cmdsounddown[]  = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *cmdsoundtoggle[]  = { "amixer", "-q", "sset", "Master", "toggle", NULL };
 // You have to do script in path, which contains something like this: google-chrome `xsel -o`
-static const char *cmdopenchrome[]  = { "c", NULL };
+static const char *cmdopenbrowser[]  = { "open-browser.sh", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,             XK_c,      spawn,          {.v = cmdopenchrome } },
+	{ MODKEY,             XK_c,      spawn,          {.v = cmdopenbrowser } },
 	/* Sound */
 	{ 0,                            KEY_SOUND_UP,     spawn,         {.v = cmdsoundup } },
 	{ 0,                            KEY_SOUND_DOWN,   spawn,         {.v = cmdsounddown } },

@@ -42,6 +42,8 @@ dist: clean
 	@rm -rf dwm-${VERSION}
 
 install: all
+	@echo
+	@echo ":: [ DWM core ] ::"
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
 	@cp -f dwm ${DESTDIR}${PREFIX}/bin
@@ -50,17 +52,27 @@ install: all
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	@sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	@echo
+	@echo ":: [ DWM session  ] ::"
 	@echo installing dwm.desktop to ${XSESSIONS}
 	@cp -f dwm.desktop ${XSESSIONS}/dwm.desktop
 	@echo installing dwm-personalized to ${DESTDIR}${PREFIX}/bin
 	@cp -f dwm-personalized ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm-personalized
+	@echo
+	@echo ":: [ DWM-PANEL ] ::"
 	@echo installing dwm-panel service to /etc/init.d/
 	@cp -f dwm-panel/dwm-panel /etc/init.d/dwm-panel
 	@cp -f dwm-panel/dwm-panel-cycle /etc/init.d/dwm-panel-cycle
 	@chmod +x /etc/init.d/dwm-panel /etc/init.d/dwm-panel-cycle
+	@echo
+	@echo ":: [ SCRIPTS ] ::"
+	@echo "Installing 'open-browser.sh' to ${PREFIX}/bin/open-browser.sh"
+	@sed "s/WEB_BROWSER/${WEB_BROWSER}/g" < scripts/open-browser.sh >  ${DESTDIR}${PREFIX}/bin/open-browser.sh
+
 
 uninstall:
+	@echo "Warning! This script is not reliable - does NOT remove all files."
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
 	@rm -f ${DESTDIR}${PREFIX}/bin/dwm
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1

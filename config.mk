@@ -3,6 +3,9 @@ VERSION = 6.1
 
 # Customize below to fit your system
 
+# scripts
+WEB_BROWSER = google-chrome
+
 # paths
 PREFIX = /usr/local
 XSESSIONS = /usr/share/xsessions
