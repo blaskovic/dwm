@@ -37,6 +37,10 @@ do
 		RAM="RAM: $(free -m |awk '/cache:/ { print $3"M" }') | "
 	fi
 
+	# VOLUME
+	if [ "${FEATURES["volume"]}" = "1" ];then
+		VOLUME="V: $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
+	fi
 
 	# TABLETBATTERY
 	if [ "${FEATURES["tabletbattery"]}" = "1" ];then
@@ -52,7 +56,7 @@ do
 	# TIME
 	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
-	SHOW="${RAM}${LOAD}${TABLETBATTERY}${TIME}"
+	SHOW="${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
 	xsetroot -name "$SHOW" -display :0
 
 	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
