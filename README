@@ -8,10 +8,14 @@ I patched the vanilla DWM and configured it on my own.
 More info on [my personal web page](http://blaskovic.sk/)
 
 dwm-panel by Branislav Blaskovic
----------
+--------------------------------
 dwm-panel is service which provides titlebar in dwm. 
 Use `service dwm-panel` to print available commands.
 
+dwm-menu by Branislav Blaskovic
+-------------------------------
+In order to get dwm-menu working properly, you need to add your user into sudoers and set this:
+yourusername ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend
 
 Requirements
 ------------
