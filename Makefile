@@ -55,9 +55,9 @@ install: all
 	@echo
 	@echo ":: [ DWM session  ] ::"
 	@echo installing dwm.desktop to ${XSESSIONS}
-	@cp -f dwm.desktop ${XSESSIONS}/dwm.desktop
+	@cp -f scripts/dwm.desktop ${XSESSIONS}/dwm.desktop
 	@echo installing dwm-personalized to ${DESTDIR}${PREFIX}/bin
-	@cp -f dwm-personalized ${DESTDIR}${PREFIX}/bin
+	@cp -f scripts/dwm-personalized ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm-personalized
 	@echo
 	@echo ":: [ DWM-PANEL ] ::"

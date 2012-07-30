@@ -5,6 +5,3 @@ Name=dwm
 GenericName=Window Manager
 Comment=Dynamic window manager for X
 Exec=dwm-personalized
-
-#[Window Manager]
-#SessionManaged=true
