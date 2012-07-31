@@ -19,7 +19,8 @@ dwm-menu by Branislav Blaskovic
 -------------------------------
 
 In order to get dwm-menu working properly, you need to add your user into sudoers and set this:
-yourusername ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend
+
+    yourusername ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend
 
 Requirements
 ------------
