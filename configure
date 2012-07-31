@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#
+# Configure file for dwm
+# this file is mainly testing some dependencies
+# of dwm-panel, dwm-menu and some other scripts
+# Author: Branislav Blaskovic <branislav@blaskovic.sk>
+#
+
+bins="slock zenity pm-suspend xsel sed uptime amixer free xsetroot awk"
+missing=""
+
+for bin in $bins
+do
+
+    echo "Checking for '$bin' .."
+    which $bin &> /dev/null || missing="$missing $bin"
+
+done
+
+if [ "$missing" != "" ] ; then
+    echo "FAIL!"
+    echo "There are missing dependencies: '$missing'. If you are sure you will not need them, continue with installation."
+else
+    echo "PASS!"
+    echo "You can continue with installation."
+fi
