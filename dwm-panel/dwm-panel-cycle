@@ -23,6 +23,10 @@ while true
 do
 	SHOW=""
 
+	# WAKELOCK
+	WAKELOCK=""
+	xset -display :0.0 q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | "
+
 	# LOAD
 	if [ "${FEATURES["load"]}" = "1" ];then
 		# Every 5 minutes
@@ -56,7 +60,7 @@ do
 	# TIME
 	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
-	SHOW="${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
+	SHOW="${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
 	xsetroot -name "$SHOW" -display :0
 
 	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))

@@ -73,6 +73,8 @@ static const char *cmdsoundtoggle[]  = { "amixer", "-q", "sset", "Master", "togg
 /* Scripts */
 static const char *cmdopenbrowser[]  = { "open-browser.sh", NULL };
 static const char *cmddwmmenu[]  = { "dwm-menu.sh", NULL };
+/* DPMS - wake lock (dwm-panel needed) */
+static const char *cmdtogglewakelock[]  = { "service", "dwm-panel", "toggle", "wakelock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -80,6 +82,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             XK_c,      spawn,          {.v = cmdopenbrowser } },
 	{ MODKEY|ShiftMask,   XK_m,      spawn,          {.v = cmddwmmenu } },
+	{ MODKEY|ShiftMask,   XK_w,      spawn,          {.v = cmdtogglewakelock } },
 	/* Sound */
 	{ 0,                            KEY_SOUND_UP,     spawn,         {.v = cmdsoundup } },
 	{ 0,                            KEY_SOUND_DOWN,   spawn,         {.v = cmdsounddown } },

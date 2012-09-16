@@ -91,9 +91,15 @@ disable)
 	FEATURES["$OPTION"]=0
 	F_SAVE_FEATURE_FILE
 	;;
+toggle)
+	if [ "$OPTION" = "wakelock" ] ; then
+		echo "Toggling wakelock"
+		xset -display :0.0 q | grep "DPMS is Enabled" > /dev/null && xset -display :0.0 -dpms || xset -display :0.0 +dpms
+	fi
+	;;
 *)
 	echo "Available commands:"
-	echo "{start|stop|restart|features|enable|disable}"
+	echo "{start|stop|restart|features|enable|disable|toggle wakelock}"
 	;;
 esac
 
