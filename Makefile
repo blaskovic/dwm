@@ -71,10 +71,12 @@ install: all
 	@sed "s/WEB_BROWSER/${WEB_BROWSER}/g" < scripts/open-browser.sh > ${DESTDIR}${PREFIX}/bin/open-browser.sh
 	@echo "Installing 'dwm-menu.sh' to ${PREFIX}/bin/dwm-menu.sh"
 	@cp -f scripts/dwm-menu.sh ${DESTDIR}${PREFIX}/bin/dwm-menu.sh
+	@cp -f scripts/switch-keyboard.sh ${DESTDIR}${PREFIX}/bin/switch-keyboard.sh
 	@echo
 	@echo ":: [ SCRIPTS - permissions ] ::"
 	@chmod +x ${DESTDIR}${PREFIX}/bin/open-browser.sh
 	@chmod +x ${DESTDIR}${PREFIX}/bin/dwm-menu.sh
+	@chmod +x ${DESTDIR}${PREFIX}/bin/switch-keyboard.sh
 
 
 uninstall:

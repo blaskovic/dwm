@@ -59,8 +59,16 @@ do
 
 	# TIME
 	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+	if [ "${FEATURES["keyboard-layout"]}" = "1" ];then
+        layout=`DISPLAY=:0 setxkbmap -query | grep ^layout | awk '{print $2}' | sed 's/ //g'`
+        variant="`DISPLAY=:0 setxkbmap -query | grep ^variant | awk '{print $2}'`"
+        test "x$variant" = "x" && KEYBOARD="${layout} | " || KEYBOARD="${layout}/${variant} | "
+    fi
 
-	SHOW="${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
+	# KEYBOARD LAYOUT
+	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+
+	SHOW="${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
 	xsetroot -name "$SHOW" -display :0
 
 	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
