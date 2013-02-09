@@ -1,6 +1,11 @@
 #!/bin/bash
 service dwm-panel start
 
+# Black background
+xsetroot -solid black
+# Fix for Java apps
+wmname LG3D
+
 while true; do
 	dwm || exit
 done
