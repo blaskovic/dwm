@@ -7,7 +7,7 @@
 # Author: Branislav Blaskovic <branislav@blaskovic.sk>
 #
 
-bins="slock zenity pm-suspend xsel sed uptime amixer free xsetroot awk setxkbmap xsetroot wmname"
+bins="slock zenity pm-suspend xsel sed uptime amixer free xsetroot awk setxkbmap xsetroot wmname dmenu"
 missing=""
 
 for bin in $bins
