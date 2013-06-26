@@ -2,7 +2,7 @@
 
 # Files
 CYCLE_NAME="dwm-panel-cycle"
-FEATURES_FILE="/tmp/dwm-panel.features"
+FEATURES_FILE="/var/tmp/dwm-panel.features"
 CYCLE_SCRIPT="/etc/init.d/$CYCLE_NAME"
 
 touch "$FEATURES_FILE"

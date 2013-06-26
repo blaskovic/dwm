@@ -5,6 +5,11 @@ service dwm-panel start
 xsetroot -solid black
 # Fix for Java apps
 wmname LG3D
+# Launch DBus if needed
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
+
 
 while true; do
 	dwm || exit

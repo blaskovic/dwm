@@ -1,8 +1,9 @@
 #!/bin/bash
 
-DISPLAY=":0"
+export DISPLAY=":0"
 
-FEATURES_FILE="/tmp/dwm-panel.features"
+FEATURES_FILE="/var/tmp/dwm-panel.features"
+touch $FEATURES_FILE
 declare -A FEATURES
 
 F_LOAD_FEATURE_FILE()
@@ -25,7 +26,7 @@ do
 
 	# WAKELOCK
 	WAKELOCK=""
-	xset -display :0.0 q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | "
+	xset -display :0.0 q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
 
 	# LOAD
 	if [ "${FEATURES["load"]}" = "1" ];then
