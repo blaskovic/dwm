@@ -4,7 +4,7 @@ VERSION = 6.1
 # Customize below to fit your system
 
 # scripts
-WEB_BROWSER = google-chrome
+WEB_BROWSER = firefox
 
 # paths
 PREFIX = /usr/local
