@@ -61,10 +61,10 @@ install: all
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm-personalized
 	@echo
 	@echo ":: [ DWM-PANEL ] ::"
-	@echo installing dwm-panel service to /etc/init.d/
-	@cp -f dwm-panel/dwm-panel /etc/init.d/dwm-panel
-	@cp -f dwm-panel/dwm-panel-cycle /etc/init.d/dwm-panel-cycle
-	@chmod +x /etc/init.d/dwm-panel /etc/init.d/dwm-panel-cycle
+	@echo installing dwm-panel to /usr/bin
+	@cp -f dwm-panel/dwm-panel /usr/bin/dwm-panel
+	@cp -f dwm-panel/dwm-panel-cycle /usr/bin/dwm-panel-cycle
+	@chmod +x /usr/bin/dwm-panel /usr/bin/dwm-panel-cycle
 	@echo
 	@echo ":: [ SCRIPTS ] ::"
 	@echo "Installing 'open-browser.sh' to ${PREFIX}/bin/open-browser.sh"

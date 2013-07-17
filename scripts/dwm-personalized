@@ -1,5 +1,5 @@
 #!/bin/bash
-service dwm-panel start
+/usr/bin/dwm-panel start
 
 # Black background
 xsetroot -solid black

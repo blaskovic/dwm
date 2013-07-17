@@ -3,7 +3,7 @@
 # Files
 CYCLE_NAME="dwm-panel-cycle"
 FEATURES_FILE="/var/tmp/dwm-panel.features"
-CYCLE_SCRIPT="/etc/init.d/$CYCLE_NAME"
+CYCLE_SCRIPT="/usr/bin/$CYCLE_NAME"
 
 touch "$FEATURES_FILE"
 

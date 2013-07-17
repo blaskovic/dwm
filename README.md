@@ -7,13 +7,14 @@ Forked by Branislav Blaskovic
 -----------------------------
 
 I patched the vanilla DWM and configured it on my own.
-More info on [my personal web page](http://blaskovic.sk/)
+More info on [my personal web page](http://blaskovic.sk/).
+This fork is tested on Fedora LXDE spin.
 
 dwm-panel by Branislav Blaskovic
 --------------------------------
 
-dwm-panel is service which provides titlebar in dwm. 
-Use `service dwm-panel` to print available commands.
+dwm-panel is a daemon which provides titlebar in dwm. 
+Use `/usr/bin/dwm-panel` to print available commands.
 
 dwm-menu by Branislav Blaskovic
 -------------------------------
