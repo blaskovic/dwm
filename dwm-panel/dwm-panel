@@ -10,7 +10,7 @@ touch "$FEATURES_FILE"
 # Functions
 F_START()
 {
-	pidof $CYCLE_SCRIPT && echo "Service is already running" && return 1
+	pgrep $CYCLE_NAME && echo "Service is already running" && return 1
 	$CYCLE_SCRIPT 2>&1 >/dev/null &
 	return 0
 }
@@ -94,7 +94,7 @@ disable)
 toggle)
 	if [ "$OPTION" = "wakelock" ] ; then
 		echo "Toggling wakelock"
-		xset -display :0.0 q | grep "DPMS is Enabled" > /dev/null && xset -display :0.0 -dpms || xset -display :0.0 +dpms
+		xset  q | grep "DPMS is Enabled" > /dev/null && xset -dpms || xset +dpms
 	fi
 	;;
 *)

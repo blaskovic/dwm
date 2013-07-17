@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export DISPLAY=":0"
-
 FEATURES_FILE="/var/tmp/dwm-panel.features"
 touch $FEATURES_FILE
 declare -A FEATURES
@@ -26,7 +24,7 @@ do
 
 	# WAKELOCK
 	WAKELOCK=""
-	xset -display :0.0 q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
+	xset q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
 
 	# LOAD
 	if [ "${FEATURES["load"]}" = "1" ];then
@@ -61,8 +59,8 @@ do
 	# TIME
 	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 	if [ "${FEATURES["keyboard-layout"]}" = "1" ];then
-        layout=`DISPLAY=:0 setxkbmap -query | grep ^layout | awk '{print $2}' | sed 's/ //g'`
-        variant="`DISPLAY=:0 setxkbmap -query | grep ^variant | awk '{print $2}'`"
+        layout=`setxkbmap -query | grep ^layout | awk '{print $2}' | sed 's/ //g'`
+        variant="`setxkbmap -query | grep ^variant | awk '{print $2}'`"
         test "x$variant" = "x" && KEYBOARD="${layout} | " || KEYBOARD="${layout}/${variant} | "
     fi
 
@@ -70,7 +68,7 @@ do
 	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
 	SHOW="${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
-	xsetroot -name "$SHOW" -display :0
+	xsetroot -name "$SHOW"
 
 	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
 	((LOAD_TIME=$LOAD_TIME-1))
