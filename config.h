@@ -74,6 +74,7 @@ static const char *cmdKBskQwerty[]  = { "switch-keyboard.sh", "sk", "qwerty", NU
 /* Scripts */
 static const char *cmdopenbrowser[]  = { "open-browser.sh", NULL };
 static const char *cmddwmmenu[]  = { "dwm-menu.sh", NULL };
+static const char *cmdscreenshot[]  = { "screenshot", "-i", NULL };
 /* DPMS - wake lock (dwm-panel needed) */
 static const char *cmdtogglewakelock[]  = { "service", "dwm-panel", "toggle", "wakelock", NULL };
 
@@ -86,6 +87,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,   XK_w,      spawn,          {.v = cmdtogglewakelock } },
 	{ MODKEY|ShiftMask,   XK_k,      spawn,          {.v = cmdKBus } },
 	{ MODKEY|ShiftMask,   XK_l,      spawn,          {.v = cmdKBskQwerty } },
+	{ MODKEY|ShiftMask,   XK_s,      spawn,          {.v = cmdscreenshot } },
 	/* Sound */
 	{ 0,                            KEY_SOUND_UP,     spawn,         {.v = cmdsoundup } },
 	{ 0,                            KEY_SOUND_DOWN,   spawn,         {.v = cmdsounddown } },
