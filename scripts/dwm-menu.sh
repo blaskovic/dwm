@@ -1,21 +1,21 @@
 #!/bin/bash
 
-options=""
+CONFIG_FILE=~/.dwm-menu
 
-# Actions
-options="$options 1 ScreenLock"
-action[1]="slock"
+FONT="-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*"
+DMENU="dmenu -fn $FONT"
 
-options="$options 2 Suspend"
-action[2]="slock & sudo pm-suspend"
+ERROR="ERROR! Config file is missing!
+Create $CONFIG_FILE file according to this template:
 
-# Ask for option
-selected=`zenity --list --column id --column action --title "dwm-menu" --text "Choose action" $options`
+Name of command | command to execute
+Another name | another command"
+
+# If config file is missing
+test -f $CONFIG_FILE || { echo "$ERROR" | $DMENU -l `echo "$ERROR" | wc -l`; exit 1;}
+
+# Get it
+selected=`cat $CONFIG_FILE | $DMENU -l "\`cat $CONFIG_FILE | wc -l\`" | awk -F'|' '{print $2}'`
 
 # Run it!
-if [ "$selected" != "" ];then
-    # Debug
-    echo "Choosed option $selected"
-    # Run it
-    eval ${action[$selected]}
-fi
+eval "$selected"

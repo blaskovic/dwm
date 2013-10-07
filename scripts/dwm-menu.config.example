@@ -1,0 +1,2 @@
+ScreenLock     | slock
+Suspend        | slock & sudo pm-suspend
