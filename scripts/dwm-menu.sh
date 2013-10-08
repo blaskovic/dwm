@@ -15,7 +15,7 @@ Another name | another command"
 test -f $CONFIG_FILE || { echo "$ERROR" | $DMENU -l `echo "$ERROR" | wc -l`; exit 1;}
 
 # Get it
-selected=`cat $CONFIG_FILE | $DMENU -l "\`cat $CONFIG_FILE | wc -l\`" | awk -F'|' '{print $2}'`
+selected=`cat $CONFIG_FILE | nl -w 2 -s '. ' | $DMENU -l "\`cat $CONFIG_FILE | wc -l\`" | awk -F'|' '{print $2}'`
 
 # Run it!
 eval "$selected"
