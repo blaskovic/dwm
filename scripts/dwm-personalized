@@ -14,5 +14,5 @@ fi
 
 
 while true; do
-	dwm || exit
+    dwm || { /usr/bin/dwm-panel stop; exit; }
 done
