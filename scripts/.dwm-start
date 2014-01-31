@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Put this as $HOME/.dwm-start
+
+slock &
+terminator &

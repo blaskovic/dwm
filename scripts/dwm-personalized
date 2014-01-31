@@ -12,6 +12,8 @@ fi
 # Start polkit agent
 /usr/libexec/lxpolkit &
 
+# Start $HOME/.dwm-start if exists
+test -e $HOME/.dwm-start && $HOME/.dwm-start &
 
 while true; do
     dwm || { /usr/bin/dwm-panel stop; exit; }
