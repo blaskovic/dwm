@@ -1,2 +1,4 @@
+# Put this as $HOME/.dwm-menu to use it with dwm-menu.sh
+
 ScreenLock     | slock
 Suspend        | slock & sudo pm-suspend
