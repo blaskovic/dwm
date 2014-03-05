@@ -10,34 +10,34 @@ touch "$FEATURES_FILE"
 # Functions
 F_START()
 {
-	pgrep $CYCLE_NAME && echo "Service is already running" && return 1
-	$CYCLE_SCRIPT 2>&1 >/dev/null &
-	return 0
+    pgrep $CYCLE_NAME && echo "Service is already running" && return 1
+    $CYCLE_SCRIPT 2>&1 >/dev/null &
+    return 0
 }
 
 F_STOP()
 {
-	killall "$CYCLE_NAME"
+    killall "$CYCLE_NAME"
 }
 
 F_SAVE_FEATURE_FILE()
 {
-	SAVE=""
-	for feature in "${!FEATURES[@]}"
-	do
-		SAVE="${feature}=${FEATURES["$feature"]} ${SAVE}"
-	done
-	echo "$SAVE" > $FEATURES_FILE
+    SAVE=""
+    for feature in "${!FEATURES[@]}"
+    do
+        SAVE="${feature}=${FEATURES["$feature"]} ${SAVE}"
+    done
+    echo "$SAVE" > $FEATURES_FILE
 }
 
 F_LOAD_FEATURE_FILE()
 {
-	for setting in $(cat $FEATURES_FILE)
-	do
-		feature=$(echo "$setting" | awk -F= '{print $1}')
-		value=$(echo "$setting" | awk -F= '{print $2}')
-		FEATURES["$feature"]=$value
-	done
+    for setting in $(cat $FEATURES_FILE)
+    do
+        feature=$(echo "$setting" | awk -F= '{print $1}')
+        value=$(echo "$setting" | awk -F= '{print $2}')
+        FEATURES["$feature"]=$value
+    done
 }
 
 # Features and their default values
@@ -45,7 +45,7 @@ declare -A FEATURES=( ["time"]=1 ["tabletbattery"]=0 ["load"]=0 ["ram_usage"]=1 
 
 # If feature file is empty, set with default values
 if [ "$( cat $FEATURES_FILE )" = "" ];then
-	F_SAVE_FEATURE_FILE
+    F_SAVE_FEATURE_FILE
 fi
 
 F_LOAD_FEATURE_FILE
@@ -61,45 +61,45 @@ echo
 
 case "$COMMAND" in
 start)
-	echo "Starting service"
-	F_START
-	;;
+    echo "Starting service"
+    F_START
+    ;;
 stop)
-	echo "Stopping service"
-	F_STOP
-	;;
+    echo "Stopping service"
+    F_STOP
+    ;;
 restart)
-	echo "Restarting service"
-	F_STOP
-	F_START
-	;;
+    echo "Restarting service"
+    F_STOP
+    F_START
+    ;;
 features)
-	echo "Listing features:"
-	F_LOAD_FEATURE_FILE
-	for feature in "${!FEATURES[@]}"
-	do
-		echo "$feature = ${FEATURES["$feature"]}"
-	done
-	;;
+    echo "Listing features:"
+    F_LOAD_FEATURE_FILE
+    for feature in "${!FEATURES[@]}"
+    do
+        echo "$feature = ${FEATURES["$feature"]}"
+    done
+    ;;
 enable)
-	echo "Enabling feature $OPTION"
-	FEATURES["$OPTION"]=1
-	F_SAVE_FEATURE_FILE
-	;;
+    echo "Enabling feature $OPTION"
+    FEATURES["$OPTION"]=1
+    F_SAVE_FEATURE_FILE
+    ;;
 disable)
-	echo "Disabling feature $OPTION"
-	FEATURES["$OPTION"]=0
-	F_SAVE_FEATURE_FILE
-	;;
+    echo "Disabling feature $OPTION"
+    FEATURES["$OPTION"]=0
+    F_SAVE_FEATURE_FILE
+    ;;
 toggle)
-	if [ "$OPTION" = "wakelock" ] ; then
-		echo "Toggling wakelock"
-		xset  q | grep "DPMS is Enabled" > /dev/null && xset -dpms || xset +dpms
-	fi
-	;;
+    if [ "$OPTION" = "wakelock" ] ; then
+        echo "Toggling wakelock"
+        xset  q | grep "DPMS is Enabled" > /dev/null && xset -dpms || xset +dpms
+    fi
+    ;;
 *)
-	echo "Available commands:"
-	echo "{start|stop|restart|features|enable|disable|toggle wakelock}"
-	;;
+    echo "Available commands:"
+    echo "{start|stop|restart|features|enable|disable|toggle wakelock}"
+    ;;
 esac
 

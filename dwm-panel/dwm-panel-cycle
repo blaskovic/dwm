@@ -6,12 +6,12 @@ declare -A FEATURES
 
 F_LOAD_FEATURE_FILE()
 {
-	for setting in $(cat $FEATURES_FILE)
-	do
-		feature=$(echo "$setting" | awk -F= '{print $1}')
-		value=$(echo "$setting" | awk -F= '{print $2}')
-		FEATURES["$feature"]=$value
-	done
+    for setting in $(cat $FEATURES_FILE)
+    do
+        feature=$(echo "$setting" | awk -F= '{print $1}')
+        value=$(echo "$setting" | awk -F= '{print $2}')
+        FEATURES["$feature"]=$value
+    done
 }
 
 F_LOAD_FEATURE_FILE
@@ -20,57 +20,57 @@ TABLET_BATTERY_TIME=0
 LOAD_TIME=0
 while true
 do
-	SHOW=""
+    SHOW=""
 
-	# WAKELOCK
-	WAKELOCK=""
-	xset q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
+    # WAKELOCK
+    WAKELOCK=""
+    xset q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
 
-	# LOAD
-	if [ "${FEATURES["load"]}" = "1" ];then
-		# Every 5 minutes
-		if [ "$LOAD_TIME" -eq 0 ] ; then
-			LOAD_TIME=60
-			LOAD="L:$( uptime | sed 's/.*,//' ) | "
-		fi
-	fi
+    # LOAD
+    if [ "${FEATURES["load"]}" = "1" ];then
+        # Every 5 minutes
+        if [ "$LOAD_TIME" -eq 0 ] ; then
+            LOAD_TIME=60
+            LOAD="L:$( uptime | sed 's/.*,//' ) | "
+        fi
+    fi
 
-	# RAM
-	if [ "${FEATURES["ram_usage"]}" = "1" ];then
-		RAM="RAM: $(free -m |awk '/cache:/ { print $3"M" }') | "
-	fi
+    # RAM
+    if [ "${FEATURES["ram_usage"]}" = "1" ];then
+        RAM="RAM: $(free -m |awk '/cache:/ { print $3"M" }') | "
+    fi
 
-	# VOLUME
-	if [ "${FEATURES["volume"]}" = "1" ];then
-		VOLUME="V: $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
-	fi
+    # VOLUME
+    if [ "${FEATURES["volume"]}" = "1" ];then
+        VOLUME="V: $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
+    fi
 
-	# TABLETBATTERY
-	if [ "${FEATURES["tabletbattery"]}" = "1" ];then
-		# Every 5 minutes
-		if [ "$TABLET_BATTERY_TIME" -eq 0 ] ; then
-			BATT="B:$(cat /sys/class/power_supply/battery/capacity)%"
-			DOCK="D:$(cat /sys/class/power_supply/dock_battery/capacity)%"
-			TABLET_BATTERY_TIME=300
-			TABLETBATTERY="$BATT $DOCK | "
-		fi
-	fi
+    # TABLETBATTERY
+    if [ "${FEATURES["tabletbattery"]}" = "1" ];then
+        # Every 5 minutes
+        if [ "$TABLET_BATTERY_TIME" -eq 0 ] ; then
+            BATT="B:$(cat /sys/class/power_supply/battery/capacity)%"
+            DOCK="D:$(cat /sys/class/power_supply/dock_battery/capacity)%"
+            TABLET_BATTERY_TIME=300
+            TABLETBATTERY="$BATT $DOCK | "
+        fi
+    fi
 
-	# TIME
-	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
-	if [ "${FEATURES["keyboard-layout"]}" = "1" ];then
+    # TIME
+    TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+    if [ "${FEATURES["keyboard-layout"]}" = "1" ];then
         layout=`setxkbmap -query | grep ^layout | awk '{print $2}' | sed 's/ //g'`
         variant="`setxkbmap -query | grep ^variant | awk '{print $2}'`"
         test "x$variant" = "x" && KEYBOARD="${layout} | " || KEYBOARD="${layout}/${variant} | "
     fi
 
-	# KEYBOARD LAYOUT
-	TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+    # KEYBOARD LAYOUT
+    TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
-	SHOW="${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
-	xsetroot -name "$SHOW"
+    SHOW="${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
+    xsetroot -name "$SHOW"
 
-	((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
-	((LOAD_TIME=$LOAD_TIME-1))
-	sleep 1
+    ((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
+    ((LOAD_TIME=$LOAD_TIME-1))
+    sleep 1
 done
