@@ -1,6 +1,7 @@
 #!/bin/bash
 
 FEATURES_FILE="/var/tmp/dwm-panel.features"
+CUSTOM_FILE="$HOME/.dwm-panel-custom"
 touch $FEATURES_FILE
 declare -A FEATURES
 
@@ -21,6 +22,10 @@ LOAD_TIME=0
 while true
 do
     SHOW=""
+
+    # CUSTOM MESSAGE
+    CUSTOM=""
+    test -e "$CUSTOM_FILE" && CUSTOM="$(cat "$CUSTOM_FILE")"
 
     # WAKELOCK
     WAKELOCK=""
@@ -67,7 +72,7 @@ do
     # KEYBOARD LAYOUT
     TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
-    SHOW="${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
+    SHOW="${CUSTOM}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
     xsetroot -name "$SHOW"
 
     ((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
