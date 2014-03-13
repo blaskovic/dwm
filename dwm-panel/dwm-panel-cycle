@@ -17,7 +17,7 @@ F_LOAD_FEATURE_FILE()
 
 F_LOAD_FEATURE_FILE
 
-TABLET_BATTERY_TIME=0
+BATTERY_TIME=0
 LOAD_TIME=0
 while true
 do
@@ -50,14 +50,12 @@ do
         VOLUME="V: $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
     fi
 
-    # TABLETBATTERY
-    if [ "${FEATURES["tabletbattery"]}" = "1" ];then
-        # Every 5 minutes
-        if [ "$TABLET_BATTERY_TIME" -eq 0 ] ; then
-            BATT="B:$(cat /sys/class/power_supply/battery/capacity)%"
-            DOCK="D:$(cat /sys/class/power_supply/dock_battery/capacity)%"
-            TABLET_BATTERY_TIME=300
-            TABLETBATTERY="$BATT $DOCK | "
+    # BATTERY
+    if [ "${FEATURES["battery"]}" = "1" ];then
+        # Every 1 minute
+        if [ "$BATTERY_TIME" -eq 0 ] ; then
+            BATTERY_TIME=60
+            BATTERY="B:`acpi -V | head -n 1 | awk -F',' '{print $2}'` | "
         fi
     fi
 
@@ -72,10 +70,10 @@ do
     # KEYBOARD LAYOUT
     TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
-    SHOW="${CUSTOM}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${TABLETBATTERY}${TIME}"
+    SHOW="${CUSTOM}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${BATTERY}${TIME}"
     xsetroot -name "$SHOW"
 
-    ((TABLET_BATTERY_TIME=$TABLET_BATTERY_TIME-1))
+    ((BATTERY_TIME=$BATTERY_TIME-1))
     ((LOAD_TIME=$LOAD_TIME-1))
     sleep 1
 done

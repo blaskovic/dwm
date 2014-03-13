@@ -41,7 +41,7 @@ F_LOAD_FEATURE_FILE()
 }
 
 # Features and their default values
-declare -A FEATURES=( ["time"]=1 ["tabletbattery"]=0 ["load"]=0 ["ram_usage"]=1 ["volume"]=1 ["keyboard-layout"]=1 )
+declare -A FEATURES=( ["time"]=1 ["battery"]=0 ["load"]=0 ["ram_usage"]=1 ["volume"]=1 ["keyboard-layout"]=1 )
 
 # If feature file is empty, set with default values
 if [ "$( cat $FEATURES_FILE )" = "" ];then
