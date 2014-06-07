@@ -93,7 +93,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,   XK_s,      spawn,          {.v = cmdscreenshot } },
 	/* Sound */
 	{ 0,                            KEY_SOUND_UP,     spawn,         {.v = cmdsoundup } },
+	{ MODKEY|ShiftMask,                       XK_Up,     spawn,         {.v = cmdsoundup } },
 	{ 0,                            KEY_SOUND_DOWN,   spawn,         {.v = cmdsounddown } },
+	{ MODKEY|ShiftMask,                       XK_Down,     spawn,         {.v = cmdsounddown } },
 	{ 0,                            KEY_SOUND_TOGGLE, spawn,         {.v = cmdsoundtoggle } },
 	/* Killing dwm */
 	{ MODKEY|ShiftMask,             XK_q,      spawn,           {.v = cmdkilldwm} },
