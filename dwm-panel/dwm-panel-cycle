@@ -33,10 +33,9 @@ do
 
     # LOAD
     if [ "${FEATURES["load"]}" = "1" ];then
-        # Every 5 minutes
         if [ "$LOAD_TIME" -eq 0 ] ; then
-            LOAD_TIME=60
-            LOAD="L:$( uptime | sed 's/.*,//' ) | "
+            LOAD_TIME=15
+            LOAD="L: $( uptime | awk '{print $(NF-2)}' | sed 's/,//' ) | "
         fi
     fi
 
