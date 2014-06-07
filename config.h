@@ -78,7 +78,7 @@ static const char *cmdopenbrowser[]  = { "open-browser.sh", NULL };
 static const char *cmddwmmenu[]  = { "dwm-menu.sh", NULL };
 static const char *cmdscreenshot[]  = { "screenshot", "-i", NULL };
 /* DPMS - wake lock (dwm-panel needed) */
-static const char *cmdtogglewakelock[]  = { "service", "dwm-panel", "toggle", "wakelock", NULL };
+static const char *cmdtogglewakelock[]  = { "dwm-panel", "toggle", "wakelock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
