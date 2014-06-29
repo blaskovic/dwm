@@ -64,13 +64,18 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, 
 static const char *termcmd[]  = { "terminator", NULL };
 static const char *filemanagercmd[]  = { "terminator", "-e", "ranger", NULL };
 static const char *cmdkilldwm[]  = { "killall", "dwm", NULL };
-/* Sound stuff */
+/* Sound keys */
 #define KEY_SOUND_UP 0x1008ff13
 #define KEY_SOUND_DOWN 0x1008ff11
 #define KEY_SOUND_TOGGLE 0x1008ff12
+/* Brightness keys */
+#define KEY_BRIGHTNESS_UP 0x1008ff02
+#define KEY_BRIGHTNESS_DOWN 0x1008ff03
 static const char *cmdsoundup[]  = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *cmdsounddown[]  = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *cmdsoundtoggle[]  = { "amixer", "-q", "sset", "Master", "toggle", NULL };
+static const char *cmdbrightnessup[]  = { "xbacklight", "-inc", "10", NULL };
+static const char *cmdbrightnessdown[]  = { "xbacklight", "-dec", "10", NULL };
 static const char *cmdKBus[]  = { "switch-keyboard.sh", "us", NULL };
 static const char *cmdKBskQwerty[]  = { "switch-keyboard.sh", "sk", "qwerty", NULL };
 /* Scripts */
@@ -99,6 +104,9 @@ static Key keys[] = {
 	{ 0,                            KEY_SOUND_TOGGLE, spawn,         {.v = cmdsoundtoggle } },
 	/* Killing dwm */
 	{ MODKEY|ShiftMask,             XK_q,      spawn,           {.v = cmdkilldwm} },
+	/* Brightness */
+	{ 0,                            KEY_BRIGHTNESS_UP,     spawn,         {.v = cmdbrightnessup } },
+	{ 0,                            KEY_BRIGHTNESS_DOWN,     spawn,         {.v = cmdbrightnessdown } },
 
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
