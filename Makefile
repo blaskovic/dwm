@@ -63,6 +63,7 @@ install: all
 	@echo
 	@echo ":: [ DWM-PANEL ] ::"
 	@echo installing dwm-panel to ${DESTDIR}/usr/bin
+	@mkdir -p ${DESTDIR}/usr/bin
 	@cp -f dwm-panel/dwm-panel ${DESTDIR}/usr/bin/dwm-panel
 	@cp -f dwm-panel/dwm-panel-cycle ${DESTDIR}/usr/bin/dwm-panel-cycle
 	@chmod +x /usr/bin/dwm-panel ${DESTDIR}/usr/bin/dwm-panel-cycle
