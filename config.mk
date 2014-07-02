@@ -7,7 +7,7 @@ VERSION = 6.1
 WEB_BROWSER = firefox
 
 # paths
-PREFIX = /usr/local
+PREFIX = /usr/
 XSESSIONS = /usr/share/xsessions
 MANPREFIX = ${PREFIX}/share/man
 

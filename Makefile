@@ -66,7 +66,7 @@ install: all
 	@mkdir -p ${DESTDIR}/usr/bin
 	@cp -f dwm-panel/dwm-panel ${DESTDIR}/usr/bin/dwm-panel
 	@cp -f dwm-panel/dwm-panel-cycle ${DESTDIR}/usr/bin/dwm-panel-cycle
-	@chmod +x /usr/bin/dwm-panel ${DESTDIR}/usr/bin/dwm-panel-cycle
+	@chmod +x ${DESTDIR}/usr/bin/dwm-panel ${DESTDIR}/usr/bin/dwm-panel-cycle
 	@echo
 	@echo ":: [ SCRIPTS ] ::"
 	@echo "Installing 'open-browser.sh' to ${DESTDIR}${PREFIX}/bin/open-browser.sh"
