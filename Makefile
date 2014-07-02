@@ -54,22 +54,22 @@ install: all
 	@chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	@echo
 	@echo ":: [ DWM session  ] ::"
-	@echo installing dwm.desktop to ${XSESSIONS}
-	@cp -f scripts/dwm.desktop ${XSESSIONS}/dwm.desktop
+	@echo installing dwm.desktop to ${DESTDIR}${XSESSIONS}
+	@cp -f scripts/dwm.desktop ${DESTDIR}${XSESSIONS}/dwm.desktop
 	@echo installing dwm-personalized to ${DESTDIR}${PREFIX}/bin
 	@cp -f scripts/dwm-personalized ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm-personalized
 	@echo
 	@echo ":: [ DWM-PANEL ] ::"
-	@echo installing dwm-panel to /usr/bin
-	@cp -f dwm-panel/dwm-panel /usr/bin/dwm-panel
-	@cp -f dwm-panel/dwm-panel-cycle /usr/bin/dwm-panel-cycle
-	@chmod +x /usr/bin/dwm-panel /usr/bin/dwm-panel-cycle
+	@echo installing dwm-panel to ${DESTDIR}/usr/bin
+	@cp -f dwm-panel/dwm-panel ${DESTDIR}/usr/bin/dwm-panel
+	@cp -f dwm-panel/dwm-panel-cycle ${DESTDIR}/usr/bin/dwm-panel-cycle
+	@chmod +x /usr/bin/dwm-panel ${DESTDIR}/usr/bin/dwm-panel-cycle
 	@echo
 	@echo ":: [ SCRIPTS ] ::"
-	@echo "Installing 'open-browser.sh' to ${PREFIX}/bin/open-browser.sh"
+	@echo "Installing 'open-browser.sh' to ${DESTDIR}${PREFIX}/bin/open-browser.sh"
 	@sed "s/WEB_BROWSER/${WEB_BROWSER}/g" < scripts/open-browser.sh > ${DESTDIR}${PREFIX}/bin/open-browser.sh
-	@echo "Installing 'dwm-menu.sh' to ${PREFIX}/bin/dwm-menu.sh"
+	@echo "Installing 'dwm-menu.sh' to ${DESTDIR}${PREFIX}/bin/dwm-menu.sh"
 	@cp -f scripts/dwm-menu.sh ${DESTDIR}${PREFIX}/bin/dwm-menu.sh
 	@cp -f scripts/switch-keyboard.sh ${DESTDIR}${PREFIX}/bin/switch-keyboard.sh
 	@echo
