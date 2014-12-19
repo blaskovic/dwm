@@ -19,6 +19,7 @@ F_LOAD_FEATURE_FILE
 
 BATTERY_TIME=0
 LOAD_TIME=0
+RAM_TIME=0
 while true
 do
     SHOW=""
@@ -41,7 +42,10 @@ do
 
     # RAM
     if [ "${FEATURES["ram_usage"]}" = "1" ];then
-        RAM="RAM: $(free -m |awk '/cache:/ { print $3"M" }') | "
+        if [ "$RAM_TIME" -eq 0 ] ; then
+            RAM_TIME=3
+            RAM="RAM: $(free -m |awk '/Mem:/ { print $3"M" }') | "
+        fi
     fi
 
     # VOLUME
@@ -76,5 +80,6 @@ do
 
     ((BATTERY_TIME=$BATTERY_TIME-1))
     ((LOAD_TIME=$LOAD_TIME-1))
+    ((RAM_TIME=$RAM_TIME-1))
     sleep 1
 done
