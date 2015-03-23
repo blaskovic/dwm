@@ -76,9 +76,9 @@ install: all
 	@cp -f scripts/switch-keyboard.sh ${DESTDIR}${PREFIX}/bin/switch-keyboard.sh
 	@echo
 	@echo ":: [ SCRIPTS - permissions ] ::"
-	@chmod +x ${DESTDIR}${PREFIX}/bin/open-browser.sh
-	@chmod +x ${DESTDIR}${PREFIX}/bin/dwm-menu.sh
-	@chmod +x ${DESTDIR}${PREFIX}/bin/switch-keyboard.sh
+	@chmod +x ${DESTDIR}${PREFIX}bin/open-browser.sh
+	@chmod +x ${DESTDIR}${PREFIX}bin/dwm-menu.sh
+	@chmod +x ${DESTDIR}${PREFIX}bin/switch-keyboard.sh
 
 
 uninstall:
