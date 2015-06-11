@@ -5,6 +5,8 @@ search="http://www.google.com/search?q="
 
 source ~/.dwm-config
 
+[[ ! -z $1 ]] && link=$1
+
 if [[ $link =~ $regex ]]; then
     $WEB_BROWSER "$link"
 else
