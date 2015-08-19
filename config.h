@@ -62,6 +62,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, "-l", "10", NULL };
 static const char *termcmd[]  = { "terminator", NULL };
+static const char *eddcmd[]  = { "terminator", "-e", "edd", NULL };
 static const char *filemanagercmd[]  = { "terminator", "-e", "ranger", NULL };
 static const char *cmdkilldwm[]  = { "killall", "dwm", NULL };
 /* Sound keys */
@@ -89,6 +90,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = eddcmd } },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = filemanagercmd} },
 	{ MODKEY,             XK_c,      spawn,          {.v = cmdopenbrowser } },
 	{ MODKEY|ShiftMask,   XK_m,      spawn,          {.v = cmddwmmenu } },
