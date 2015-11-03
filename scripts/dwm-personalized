@@ -1,6 +1,4 @@
 #!/bin/bash
-/usr/bin/dwm-panel start
-
 # Black background
 xsetroot -solid black
 # Fix for Java apps
@@ -11,6 +9,9 @@ if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
 fi
 # Start polkit agent
 /usr/libexec/lxpolkit &
+
+# Start dwm-panel
+dwm-panel start
 
 # Start $HOME/.dwm-start if exists
 test -e $HOME/.dwm-start && $HOME/.dwm-start &
