@@ -50,7 +50,8 @@ do
 
     # VOLUME
     if [ "${FEATURES["volume"]}" = "1" ];then
-        VOLUME="V: $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
+        VOLUME="\xF0\x9F\x94\x8A $(amixer get Master | grep "%" | sed  "s/.*\[\([0-9]\{0,3\}\)%\].*\[on\].*/\1%/g" | sed "s/.*\[off\].*/mute/g" | tail -n 1) | "
+        echo "$VOLUME" | grep -q 'mute' && VOLUME="\xF0\x9F\x94\x88 | "
     fi
 
     # BATTERY
@@ -60,7 +61,7 @@ do
             BATTERY_TIME=60
             REMAINING=$(acpi -V | grep Discharging | grep remaining | head -n 1 | awk '{print $(NF-1)}' | awk -F':' '{print $1 "h" $2 "m" }' | sed "s/00h//")
             test x"$REMAINING" = x || REMAINING="$REMAINING "
-            BATTERY="B:`acpi -V | head -n 1 | awk -F',' '{print $2}'` $REMAINING| "
+            BATTERY="\xF0\x9F\x94\x8B`acpi -V | head -n 1 | awk -F',' '{print $2}'` $REMAINING| "
         fi
     fi
 
@@ -76,7 +77,7 @@ do
     TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
 
     SHOW="${CUSTOM}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${BATTERY}${TIME}"
-    xsetroot -name "$SHOW"
+    xsetroot -name "$(echo -e "$SHOW")"
 
     ((BATTERY_TIME=$BATTERY_TIME-1))
     ((LOAD_TIME=$LOAD_TIME-1))
