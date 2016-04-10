@@ -5,6 +5,11 @@ CUSTOM_FILE="$HOME/.dwm-panel-custom"
 touch $FEATURES_FILE
 declare -A FEATURES
 
+function rm_colors()
+{
+    sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
+}
+
 F_LOAD_FEATURE_FILE()
 {
     for setting in $(cat $FEATURES_FILE)
@@ -28,6 +33,16 @@ do
     CUSTOM=""
     test -e "$CUSTOM_FILE" && CUSTOM="$(cat "$CUSTOM_FILE")"
 
+    # TIMED
+    TIMED=""
+    timed status | grep -q 'working'
+    if [ $? -eq 0 ]
+    then
+        project=$(timed status | rm_colors | awk '/working/ {print $NF}')
+        elapsed=$(timed status | rm_colors | awk '/elapsed/ {print $2}')
+        TIMED="$project $elapsed | "
+    fi
+
     # WAKELOCK
     WAKELOCK=""
     xset q | grep "DPMS is Disabled" > /dev/null && WAKELOCK="WL | " 2>/dev/null
@@ -35,7 +50,7 @@ do
     # LOAD
     if [ "${FEATURES["load"]}" = "1" ];then
         if [ "$LOAD_TIME" -eq 0 ] ; then
-            LOAD_TIME=15
+            LOAD_TIME=1
             LOAD="L: $( uptime | awk '{print $(NF-2)}' | sed 's/,//' ) | "
         fi
     fi
@@ -43,7 +58,7 @@ do
     # RAM
     if [ "${FEATURES["ram_usage"]}" = "1" ];then
         if [ "$RAM_TIME" -eq 0 ] ; then
-            RAM_TIME=3
+            RAM_TIME=1
             RAM="RAM: $(free -m |awk '/Mem:/ { print $3"M" }') | "
         fi
     fi
@@ -58,7 +73,7 @@ do
     if [ "${FEATURES["battery"]}" = "1" ];then
         # Every 1 minute
         if [ "$BATTERY_TIME" -eq 0 ] ; then
-            BATTERY_TIME=60
+            BATTERY_TIME=2
             REMAINING=$(acpi -V | grep Discharging | grep remaining | head -n 1 | awk '{print $(NF-1)}' | awk -F':' '{print $1 "h" $2 "m" }' | sed "s/00h//")
             test x"$REMAINING" = x || REMAINING="$REMAINING "
             BATTERY="\xF0\x9F\x94\x8B`acpi -V | head -n 1 | awk -F',' '{print $2}'` $REMAINING| "
@@ -74,13 +89,15 @@ do
     fi
 
     # KEYBOARD LAYOUT
-    TIME="$(date +%H:%M:%S) | $(date +%d.%m.%Y)"
+    TIME="$(date +%H:%M) | $(date +%d.%m.%Y)"
 
-    SHOW="${CUSTOM}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${BATTERY}${TIME}"
+    SHOW="${CUSTOM}${TIMED}${KEYBOARD}${WAKELOCK}${RAM}${LOAD}${VOLUME}${BATTERY}${TIME}"
     xsetroot -name "$(echo -e "$SHOW")"
 
     ((BATTERY_TIME=$BATTERY_TIME-1))
     ((LOAD_TIME=$LOAD_TIME-1))
     ((RAM_TIME=$RAM_TIME-1))
-    sleep 1
+    sleep 30 &
+    echo $! > $HOME/.dwm-panel-sleep.pid
+    wait
 done
