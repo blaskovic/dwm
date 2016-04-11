@@ -74,9 +74,17 @@ do
         # Every 1 minute
         if [ "$BATTERY_TIME" -eq 0 ] ; then
             BATTERY_TIME=2
-            REMAINING=$(acpi -V | grep Discharging | grep remaining | head -n 1 | awk '{print $(NF-1)}' | awk -F':' '{print $1 "h" $2 "m" }' | sed "s/00h//")
-            test x"$REMAINING" = x || REMAINING="$REMAINING "
-            BATTERY="\xF0\x9F\x94\x8B`acpi -V | head -n 1 | awk -F',' '{print $2}'` $REMAINING| "
+            REMAINING=$(acpi -V | grep 'Battery 0: Discharging' | grep remaining | head -n 1 | awk '{print $(NF-1)}' | awk -F':' '{print $1 "h" $2 "m" }' | sed "s/00h//")
+            test x"$REMAINING" = x || REMAINING=" $REMAINING"
+            BATTERY="\xF0\x9F\x94\x8B`acpi -V | head -n 1 | awk -F',' '{print $2}'`$REMAINING"
+
+            if acpi -V | grep -q 'Battery 1'
+            then
+                REMAINING=$(acpi -V | grep 'Battery 1: Discharging' | grep remaining | head -n 1 | awk '{print $(NF-1)}' | awk -F':' '{print $1 "h" $2 "m" }' | sed "s/00h//")
+                test x"$REMAINING" = x || REMAINING="$REMAINING "
+                BATTERY="$BATTERY`acpi -V | grep 'Battery 1' | head -n 1 | awk -F',' '{print $2}'` $REMAINING"
+            fi
+            BATTERY="$BATTERY| "
         fi
     fi
 
