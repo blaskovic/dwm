@@ -73,6 +73,9 @@ restart)
     F_STOP
     F_START
     ;;
+refresh)
+    kill $(cat $HOME/.dwm-panel-sleep.pid) &>/dev/null
+    ;; 
 features)
     echo "Listing features:"
     F_LOAD_FEATURE_FILE
@@ -99,7 +102,7 @@ toggle)
     ;;
 *)
     echo "Available commands:"
-    echo "{start|stop|restart|features|enable|disable|toggle wakelock}"
+    echo "{start|stop|restart|refresh|features|enable|disable|toggle wakelock}"
     ;;
 esac
 
